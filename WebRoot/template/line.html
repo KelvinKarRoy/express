@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- 项目必要的外部依赖 -->
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/ionicons/css/ionicons.min.css">
+    <!-- 项目公用样式文件 -->
+    <link rel="stylesheet" href="../assets/styles/AdminLTE.min.css">
+    <link rel="stylesheet" href="../assets/styles/common.css">
+    <link rel="stylesheet" href="../assets/styles/skins/skin-blue.min.css">
+    <style type="text/css">
+    .box-body {
+        position: relative;
+    }
+    .line-block {
+        float: left;
+        width: 24%;
+        height: 180px;
+        background-color: #71C5FE;
+        color: #fff;
+        padding-top: 40px;
+        text-align:center;
+        margin:0 0.5% 10px 0.5%;
+        cursor: pointer;
+    }
+    .line-title {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+    .line-distance {
+        font-size: 18px;
+    }
+    /*三角形*/
+    .shape{
+        position: absolute;
+        top:-15px;
+        left:87%;
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 15px solid #71C5FE;
+    }
+    .form{
+        position: relative;
+        float: left;
+        width:1060px;
+        background: #71C5FE;
+        font-size: 18px;
+        padding: 30px 40px 10px 40px;
+        margin:5px 0 15px 5px;
+    }
+    /*弹出层右边的添加工点按钮*/
+    .form .addBtn{
+        float: right;
+        font:normal bold 30px/45px "汉真广标";
+        background-color: #fff;
+        color: #71C5FE;
+        padding:0 35px;
+        margin: -215px 200px 0 0;
+    }
+    .boxform{
+        padding:10px;
+        background-color: #71C5FE;
+    }
+    .form p span{
+        width:100px;
+        display: block;
+        float: left;
+        font-family: "Arial Negreta","Arial";
+        font-weight: 700;
+        color: #fff;
+    }
+    .form p input{
+        width:150px;
+        height: 22px;
+        line-height: 22px;
+        background-color: #fff;
+        border:none;
+    }
+    .form p .s1{
+        background: #71C5FE;
+        color: #fff;
+    }
+    .form p.save{
+        width:86px;
+        height: 41px;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 41px;
+        background-color: #71C5FE;
+        color:#fff;
+        margin-left: 50px;
+    }
+    .form p select{
+        font-size: 13px;
+    }
+    .form button{
+        display: block;
+        width:86px;
+        height:41px;
+        line-height: 41px;
+        background-color: #fff;
+        color:#71C5FE;
+        margin-left: 230px;
+        border:none;
+    }
+    </style>
+    <!-- 修复IE下的问题 -->
+    <!--[if lt IE 9]>
+  <script src="<%=request.getContextPath() %>/assets/js/html5shiv.js"></script>
+  <script src="<%=request.getContextPath() %>/assets/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- 左上Logo+Title -->
+            <a href="#" class="logo">
+                <span class="logo-mini"></span>
+                <span class="logo-lg"></span>
+            </a>
+            <nav class="navbar navbar-static-top">
+                <!-- 汉堡线 -->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
+                <!-- 右上的用户信息 -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> {$user} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">个人信息</a></li>
+                                <li><a href="#">修改密码</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">注销</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- 左边栏 -->
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <!-- 搜索框 -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="搜索…">
+                        <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                    </div>
+                </form>
+                <!-- 功能模块 -->
+                <ul class="sidebar-menu">
+                    <li class="header">功能模块</li>
+                    <li class="active">
+                        <a href="#">
+                            <i class="fa fa-newspaper-o"></i> <span>信息展示</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-bar-chart"></i> <span>统计分析</span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-server"></i> <span>综合管理</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="active"><a href="#"><i class="fa fa-pencil-square-o"></i> 线路编辑</a></li>
+                            <li><a href="#"><i class="fa fa-group"></i> 账号管理</a></li>
+                            <li><a href="#"><i class="fa fa-bookmark"></i> 标签管理</a></li>
+                            <li><a href="#"><i class="fa fa-exchange"></i> 应急联动</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-calendar-o"></i> <span>日志管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-upload"></i> <span>数据上传</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </aside>
+        <!-- 中间内容 -->
+        <div class="content-wrapper" style="min-height: 542px;">
+            <section class="content">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title">三号线</div>
+                            <div class="line-distance">2000m</div>
+                        </div>
+                        <div class="line-block">
+                            <div class="line-title"><img src="../assets/images/line/plus.svg" style="margin-top:10px;width:75px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- 页脚 -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> {$version}
+            </div>
+            <strong>Copyright © 2016 <a href="#">{$company}</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    
+    
+    <!-- 项目必要的外部依赖 -->
+    <script src="../assets/jQuery/jquery.min.js"></script>
+    <script src="../assets/jQuery/jquery-ui.min.js"></script>
+    <!-- 解决jQuery UI tooltip和Bootstrap tooltip之间的冲突 -->
+    <script>
+    $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 项目公共脚本 -->
+    <script src="../assets/js/app.min.js"></script>
+    <script src="../assets/js/demo.js"></script>
+    <!-- 页面js -->
+    <script>
+        var loop = {},
+            loop2 = 1,
+            loop3 = 1;
+        window.onload = function(){
+            var lineBlocks = $(".line-block");
+            for(var i =1;i<=lineBlocks.length;i++){
+                (function(i){
+                    lineBlocks.eq(i-1).on("click",function(){
+                        if(i !== lineBlocks.length){
+                            insert(i, lineBlocks.length);//增加DOM
+                            shapeMove(i-1);              //三角形移动
+                            $("#boxform p input").addClass("s1");
+                            $("#boxform p input").attr("disabled","disabled");
+                            $("#boxform p select").attr("disabled","disabled");
+                            lookline();                  //查看线路
+                        }else{
+                            insert(i, lineBlocks.length);
+                            shapeMove(i-1);
+                            $("#boxform p input").removeClass("s1");
+                            $("#boxform p input").removeAttr("disabled");
+                            $("#boxform p select").removeAttr("disabled");
+                            $("#save").html("保存");
+                            addline();                   //增加线路
+                        }
+                    })
+                })(i);
+            }
+        }
+
+        //查看线路
+        function lookline(){
+            $("#save").on("click",function(){
+                var lineName = $("#lineName").val(),
+                lineLength = $("#lineLength").val(),
+                safePeople = $("#people").val(),
+                startTime = $("#startTime").val(),
+                finishStatus = $(".form p select").val();
+                console.log(loop2);
+                if(loop2){
+                    $("#lineName").val(lineName);
+                    $("#lineLength").val(lineLength);
+                    $("#people").val(safePeople);
+                    $("#startTime").val(startTime);
+                    $(".form p select").val(finishStatus);
+                    
+                    $("#boxform p input").removeClass("s1");
+                    $("#boxform p input").removeAttr("disabled");
+                    $("#boxform p select").removeAttr("disabled");
+                    $("#save").html("保存");
+                    loop2 = 0;
+                }else{
+                    $("#boxform p input").addClass("s1");
+                    $("#boxform p input").attr("disabled","disabled");
+                    $("#boxform p select").attr("disabled","disabled");
+                    $("#save").html("编辑");
+                    loop2 = 1;
+                }
+            });
+        }
+        //增加线路
+        function addline(){
+            $("#save").on("click",function(){
+                var lineName = $("#lineName").val(),
+                lineLength = $("#lineLength").val(),
+                safePeople = $("#people").val(),
+                startTime = $("#startTime").val(),
+                finishStatus = $(".form p select").val();
+                
+                if(loop3){
+                    $("#lineName").val(lineName);
+                    $("#lineLength").val(lineLength);
+                    $("#people").val(safePeople);
+                    $("#startTime").val(startTime);
+                    $(".form p select").val(finishStatus);
+                    
+                    $("#boxform p input").addClass("s1");
+                    $("#boxform p input").attr("disabled","disabled");
+                    $("#boxform p select").attr("disabled","disabled");
+                    $("#save").html("编辑");
+                    loop3 = 0;
+                }else{
+                    $("#boxform p input").removeClass("s1");
+                    $("#boxform p input").removeAttr("disabled");
+                    $("#boxform p select").removeAttr("disabled");
+                    $("#save").html("保存");
+                    loop3 = 1;
+                }
+            });
+        }
+        //三角形移动
+        function shapeMove(i){
+            var index = i%4;
+            $(".shape").css("left",index*25+11+'%');
+        }
+        //插入DOM结构
+        function insert(i, length){
+            var line = indexLine(i);
+            if(line > length-1) line = length - 1;
+            if(!loop[line]){
+                var target = document.querySelectorAll(".line-block")[line];
+                var strDom ='<div class="shape"></div><div class="boxform" id="boxform"><p><span>线路名</span><input id="lineName" type="text"/></p>'+
+                        '<p><span>线路长度</span><input id="lineLength" type="text"/></p>'+
+                        '<p><span>质安负责人</span><input id="people" type="text"/></p>'+
+                        '<p><span>开始时间</span><input id="startTime" type="text"/></p>'+
+                        '<p><span>线路状态</span><select id="status">'+
+                        '<option value="施工中">施工中</option>'+
+                        '<option value="未施工">未施工</option>'+
+                        '<option value="已完工">已完工</option>'+
+                        '</select></p>'+
+                        '<button class="save" id="save">编辑</button>'+
+                        '</div>';
+                var oDiv = document.createElement("div");
+                oDiv.className = "form";
+                oDiv.innerHTML = strDom;
+                insertAfter(oDiv,target);
+                loop[line] = 1;
+            }
+        }
+        //像某个元素后插入元素
+        function insertAfter(newElement,targetElement){
+            var parent = targetElement.parentNode;
+            if(parent.lastChild == targetElement){
+                parent.appendChild(newElement);
+            }else{
+                parent.insertBefore(newElement,targetElement.nextSibling);
+            }
+        }
+        //获取当前要插入的行数
+        function indexLine(i){
+            return Math.ceil(i/4)*4-1;
+        }
+        
+    </script>
+</body>
+</html>

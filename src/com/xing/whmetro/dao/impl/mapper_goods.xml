@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xing.whmetro.dao.GoodsDao">
+
+	<resultMap type="Goods" id="goodsMap">
+        <result property="id" column="id"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="message" column="message"></result>
+        <result property="location" column="location"></result>
+        <result property="name" column="name"></result>
+        <result property="code" column="code"></result>
+	</resultMap>
+	
+	<insert id="insertGoods" parameterType="Goods">
+		insert into 
+		goods(create_time,message,location,name,code) 
+		value(#{createTime},#{message},#{location},#{name},#{code})
+	</insert>
+	
+	<select id="selectCountByCode" resultType="int" >
+		select count(*) 
+		from goods where code=#{code}
+	</select>
+	
+	<select id="selectCount" resultType="int">
+		select count(*) 
+		from goods
+	</select>
+	
+	<select id="selectByPage" resultMap="goodsMap">
+		select * from goods
+		order by id
+		limit #{offset},#{currentPageSize}
+	</select>
+	
+	<select id="selectByPageAndName" resultMap="goodsMap">
+		select * from goods where name like CONCAT(CONCAT('%', #{name}), '%')
+		order by id
+		limit #{offset},#{currentPageSize}
+	</select>
+	
+	<select id="selectCountByPageAndName" resultType="int">
+		select count(*) from goods where name like CONCAT(CONCAT('%', #{name}), '%')
+		limit #{offset},#{currentPageSize}
+	</select>
+	
+	<select id="selectByPageAndDate" resultMap="goodsMap">
+		select * from goods where create_time=#{date}
+		order by id
+		limit #{offset},#{currentPageSize}
+	</select>
+	
+	<select id="selectCountByPageAndDate" resultType="int">
+		select count(*) from goods where create_time=#{date}
+		limit #{offset},#{currentPageSize}
+	</select>
+	
+	<delete id="deleteGoodsById">
+		delete from goods where id=#{goodsId}
+	</delete>
+</mapper>
